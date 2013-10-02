@@ -1,150 +1,163 @@
+" set up pathogen, https://github.com/tpope/vim-pathogen
+filetype on " without this vim emits a zero exit status, later, because of :ft off
+filetype off
+call pathogen#infect()
+filetype plugin indent on
 
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2006 Aug 12
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
-
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
-
-" Use Vim settings, rather then Vi settings, much better
-" This must be first, because it changes other options as a side effect.
+" don't bother with vi compatibility
 set nocompatible
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
+" enable syntax highlighting
+syntax enable
 
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
+set autoindent
+set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
+set backspace=2                                              " Fix broken backspace in some setups
+set backupcopy=yes                                           " see :help crontab
+set clipboard=unnamed                                        " yank and paste with the system clipboard
+set directory-=.                                             " don't store swapfiles in the current directory
+set encoding=utf-8
+set expandtab                                                " expand tabs to spaces
+set ignorecase                                               " case-insensitive search
+set incsearch                                                " search as you type
+set laststatus=2                                             " always show statusline
+set list                                                     " show trailing whitespace
+set listchars=tab:▸\ ,trail:▫
+set number                                                   " show line numbers
+set shiftwidth=2                                             " normal mode indentation commands use 2 spaces
+set showcmd
+set smartcase                                                " case-sensitive search if any caps
+set softtabstop=2                                            " insert mode tab and backspace use 2 spaces
+set tabstop=8                                                " actual tabs occupy 8 characters
+set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
+set wildmenu                                                 " show a navigable menu for tab completion
+set wildmode=longest,list,full
+
+
+
+" Enable basic mouse behavior such as resizing buffers.
+set mouse=a
+if exists('$TMUX')  " Support resizing in tmux
+  set ttymouse=xterm2
+endif
+
+" keyboard shortcuts
+let mapleader = ','
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+map <leader>l :Align
+nmap <leader>a :Ack 
+nmap <leader>b :CtrlPBuffer<CR>
+nmap <leader>d :NERDTreeToggle<CR>
+nmap <leader>f :NERDTreeFind<CR>
+nmap <leader>t :CtrlP<CR>
+nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
+nmap <leader>] :TagbarToggle<CR>
+nmap <leader><space> :call whitespace#strip_trailing()<CR>
+nmap <leader>g :GitGutterToggle<CR>
+nmap <leader>c <Plug>Kwbd
+map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+
+" plugin settings
+let g:ctrlp_match_window = 'order:ttb,max:20'
+let g:NERDSpaceDelims=1
+let g:gitgutter_enabled = 0
+
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  let g:ackprg = 'ag --nogroup --column'
+
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+ 
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+ 
+" My Bundles here:
+"
+" original repos on github
+Bundle 'tpope/vim-fugitive'
+Bundle 'Lokaltog/vim-easymotion'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+Bundle 'tpope/vim-rails.git'
+" vim-scripts repos
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+" non github repos
+Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'https://github.com/Lokaltog/vim-powerline.git'
+Bundle 'https://github.com/kien/ctrlp.vim.git'
+
+Bundle 'The-NERD-tree'
+Bundle 'taglist.vim'
+Bundle 'minibufexpl.vim'
+Bundle 'bufexplorer.zip'
+Bundle 'OmniCppComplete'
+" ...
+filetype plugin indent on
+ 
+"
+" Brief help  -- 此处后面都是vundle的使用命令
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" vim-powerline plugin
+set laststatus=2
+set t_Co=256
+let g:Powerline_symbol = 'unicode'
+set encoding=utf8
+
+
+" fdoc is yaml
+autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
+" md is markdown
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+" extra rails.vim help
+autocmd User Rails silent! Rnavcommand decorator      app/decorators            -glob=**/* -suffix=_decorator.rb
+autocmd User Rails silent! Rnavcommand observer       app/observers             -glob=**/* -suffix=_observer.rb
+autocmd User Rails silent! Rnavcommand feature        features                  -glob=**/* -suffix=.feature
+autocmd User Rails silent! Rnavcommand job            app/jobs                  -glob=**/* -suffix=_job.rb
+autocmd User Rails silent! Rnavcommand mediator       app/mediators             -glob=**/* -suffix=_mediator.rb
+autocmd User Rails silent! Rnavcommand stepdefinition features/step_definitions -glob=**/* -suffix=_steps.rb
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+
+" Fix Cursor in TMUX
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 else
-  set backup		" keep a backup file
-endif
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
-
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
-
-" Don't use Ex mode, use Q for formatting
-map Q gq
-
-" In an xterm the mouse should work quite well, thus enable it.
-" set mouse=a
-
-" This is an alternative that also works in block mode, but the deleted
-" text is lost and it only works for putting the current register.
-"vnoremap p "_dp
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 endif
 
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
-
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
-
-  " For all text files set 'textwidth' to 78 characters.
-  " autocmd FileType text setlocal textwidth=78
-  autocmd FileType text setlocal textwidth=120
-
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler                                             
-  " (happens when dropping a file on gvim).
-  autocmd BufReadPost *
-    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-    \   exe "normal g`\"" |
-    \ endif
-
-  augroup END
-
-else
-
-  set autoindent		" always set autoindenting on
-
-endif " has("autocmd")
-
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-	 	\ | wincmd p | diffthis
-
-
-
-" added by chunxiang
-let &termencoding=&encoding
-set fileencodings=utf-8,gbk 
-
-"set mouse=a
-set number
-
-set tabstop=4
-set expandtab       " 用space替代tab的输入
-set nobackup
-set sw=4
-
-set fdm=marker
-
-set tags=tags;
-	set autochdir
-
-set guifont=Courier\ New\ 12
-
-
-:filetype plugin on
-
-
-if has("cscope")
-	set csprg=/usr/bin/cscope
-	set csto=1
-	set cst
-	set nocsverb
-	" add any database in current directory
-	if filereadable("cscope.out")
-		cs add cscope.out
-	endif
-	set csverb
+" Go crazy!
+if filereadable(expand("~/.vimrc.local"))
+  " In your .vimrc.local, you might like:
+  "
+  " set autowrite
+  " set nocursorline
+  " set nowritebackup
+  " set whichwrap+=<,>,h,l,[,] " Wrap arrow keys between lines
+  "
+  " autocmd! bufwritepost .vimrc source ~/.vimrc
+  " noremap! jj <ESC>
+  source ~/.vimrc.local
 endif
-
-"close autoindet
-set noautoindent
-
-"Ex ctags
-let Tlist_Ctags_Cmd="/usr/bin/ctags"
-
-
-"taglist
-let Tlist_Auto_Open=0 " Let the tag list open automatically
-let Tlist_Auto_Update=1 " Update the tag list automatically
-let Tlist_Compact_Format=1 " Hide help menu
-let Tlist_Ctags_Cmd='ctags' " Location of ctags
-let Tlist_Enable_Fold_Column=1 "do show folding tree
-let Tlist_Process_File_Always=1 " Always process the source file
-let Tlist_Show_One_File=1 " Only show the tag list of current file
-let Tlist_Exist_OnlyWindow=1 " If you are the last, kill yourself
-let Tlist_File_Fold_Auto_Close=0 " Fold closed other trees
-let Tlist_Sort_Type="name" " Order by name
-let Tlist_WinWidth=30 " Set the window 40 cols wide.
-let Tlist_Close_On_Select=0 " Close the list when a item is selected
-let Tlist_Use_SingleClick=1 "Go To Target By SingleClick
