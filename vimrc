@@ -1,5 +1,5 @@
 filetype on " without this vim emits a zero exit status, later, because of :ft off
-filetype off
+"filetype off
 filetype plugin indent on
 
 "匹配括号的规则，增加针对html的<>
@@ -24,8 +24,8 @@ set expandtab                                                " expand tabs to sp
 set ignorecase                                               " case-insensitive search
 set incsearch                                                " search as you type
 set laststatus=2                                             " always show statusline
-set list                                                     " show trailing whitespace
-set listchars=tab:▸\ ,trail:▫
+"set list                                                     " show trailing whitespace
+"set listchars=tab:▸\ ,trail:▫
 set number                                                   " show line numbers
 set shiftwidth=4                                             " normal mode indentation commands use 2 spaces
 set showcmd
