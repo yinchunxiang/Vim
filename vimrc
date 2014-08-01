@@ -1,5 +1,7 @@
+" don't bother with vi compatibility
+set nocompatible
+
 filetype on " without this vim emits a zero exit status, later, because of :ft off
-"filetype off
 filetype plugin indent on
 
 "匹配括号的规则，增加针对html的<>
@@ -7,8 +9,6 @@ set matchpairs=(:),{:},[:],<:>
 "让退格，空格，上下箭头遇到行首行尾时自动移到下一行（包括insert模式）
 set whichwrap=b,s,<,>,[,]
 
-" don't bother with vi compatibility
-set nocompatible
 
 " enable syntax highlighting
 syntax enable
