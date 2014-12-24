@@ -51,7 +51,7 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 map <leader>l :Align
-nmap <leader>a :Ack 
+"nmap <leader>a :Ack 
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
@@ -97,6 +97,7 @@ Bundle 'tpope/vim-rails.git'
 " vim-scripts repos
 Bundle 'L9'
 Bundle 'FuzzyFinder'
+Bundle 'AutoClose'
 " non github repos
 Bundle 'git://git.wincent.com/command-t.git'
 Bundle 'https://github.com/Lokaltog/vim-powerline.git'
