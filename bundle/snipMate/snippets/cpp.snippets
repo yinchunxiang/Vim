@@ -34,3 +34,22 @@ snippet cl
 
 snippet inc	
 	#include <${1:iostream}>${2}
+
+snippet printv
+	void printv(vector<${1:int}>& v) {
+		for (int i = 0; i < v.size(); ++i) {
+			cout << v[i] << " ";
+		}
+		cout << endl;
+	}
+
+snippet printvv
+	void printvv(vector<vector<${1:int}> >& vv) {
+		for (int i = 0; i < vv.size(); ++i) {
+			for(int j = 0; j < vv[i].size(); ++j) {
+				cout << v[i][j] << " ";
+			}
+			cout << endl;
+		}
+		cout << endl;
+	}
