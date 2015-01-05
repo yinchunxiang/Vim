@@ -3,6 +3,7 @@ set nocompatible
 
 filetype on " without this vim emits a zero exit status, later, because of :ft off
 filetype plugin indent on
+set modeline
 
 "匹配括号的规则，增加针对html的<>
 set matchpairs=(:),{:},[:],<:>
@@ -20,6 +21,8 @@ set backupcopy=yes                                           " see :help crontab
 set clipboard=unnamed                                        " yank and paste with the system clipboard
 set directory-=.                                             " don't store swapfiles in the current directory
 set encoding=utf-8
+set fileencoding=gb18030
+set fileencodings=utf-8,gb18030
 set expandtab                                                " expand tabs to spaces
 set ignorecase                                               " case-insensitive search
 set incsearch                                                " search as you type
