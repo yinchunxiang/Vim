@@ -35,7 +35,7 @@ snippet cl
 snippet inc	
 	#include <${1:iostream}>${2}
 
-snippet printv
+snippet pv
 	void printv(vector<${1:int}>& v) {
 		for (int i = 0; i < v.size(); ++i) {
 			cout << v[i] << " ";
@@ -43,7 +43,7 @@ snippet printv
 		cout << endl;
 	}
 
-snippet printvv
+snippet pvv
 	void printvv(vector<vector<${1:int}> >& vv) {
 		for (int i = 0; i < vv.size(); ++i) {
 			for(int j = 0; j < vv[i].size(); ++j) {
@@ -53,3 +53,6 @@ snippet printvv
 		}
 		cout << endl;
 	}
+
+snippet md
+	/* vim: set expandtab ts=4 sw=4 sts=4 tw=100 */
