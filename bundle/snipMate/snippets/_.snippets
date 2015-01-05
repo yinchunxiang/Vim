@@ -5,3 +5,30 @@ snippet c)
 	`&enc[:2] == "utf" ? "©" : "(c)"` Copyright `strftime("%Y")` ${1:`g:snips_author`}. All Rights Reserved.${2}
 snippet date
 	`strftime("%Y-%m-%d")`
+
+snippet cm
+	CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
+
+	# project top directory
+	PROJECT(demo)
+	MESSAGE("PROJECT_SOURCE_DIR:[${PROJECT_SOURCE_DIR}]")
+
+	# include pre-defined module and get some variables after that module executed
+	# Find boost 1.40
+	#INCLUDE(FindBoost)
+	#find_package(Boost 1.40.0 COMPONENTS thread unit_test_framework)
+	#if(NOT Boost_FOUND)
+	#    message(STATUS "BOOST not found, test will not succeed!")
+	#endif()
+
+	# include source search path
+	INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+	MESSAGE("CMAKE_CURRENT_SOURCE_DIR:[${CMAKE_CURRENT_SOURCE_DIR}]")
+
+	# add all source files in directory to the variable
+	AUX_SOURCE_DIRECTORY(. src_list)
+	MESSAGE("src_list:[${src_list}]")
+
+	# generate executable files
+	#ADD_EXECUTABLE(${PROJECT_SOURCE_DIR} ${src_list})
+	add_executable(${PROJECT_NAME} ${src_list} )
