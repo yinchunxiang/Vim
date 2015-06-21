@@ -21,7 +21,7 @@ set backupcopy=yes                                           " see :help crontab
 set clipboard=unnamed                                        " yank and paste with the system clipboard
 set directory-=.                                             " don't store swapfiles in the current directory
 set encoding=utf-8
-set fileencoding=gb18030
+"set fileencoding=gb18030
 set fileencodings=utf-8,gb18030
 set expandtab                                                " expand tabs to spaces
 set ignorecase                                               " case-insensitive search
