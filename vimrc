@@ -17,12 +17,25 @@ syntax enable
 set autoindent
 set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
 set backspace=2                                              " Fix broken backspace in some setups
+set nobackup
 set backupcopy=yes                                           " see :help crontab
 set clipboard=unnamed                                        " yank and paste with the system clipboard
 set directory-=.                                             " don't store swapfiles in the current directory
+
+"" vim内部使用的编码方式， 包括Vim的buffer，菜单，消息等
 set encoding=utf-8
-set fileencoding=gb18030
-set fileencodings=utf-8,gb18030
+
+"" vim中当前编辑的文件的编码方式
+set fileencoding=utf-8
+
+""set fileencodings=utf-8,gb18030
+
+"" vim自动探测的顺序表
+set fileencodings=ucs-bom,utf-8,cp936
+
+"" vim所工作的终端的自负编码方式
+set termencoding=utf-8
+
 set expandtab                                                " expand tabs to spaces
 set ignorecase                                               " case-insensitive search
 set incsearch                                                " search as you type
@@ -135,6 +148,13 @@ set t_Co=256
 let g:Powerline_symbol = 'unicode'
 set encoding=utf8
 
+" taglist setting
+let Tlist_WinWidth=40
+let Tlist_Sort_Type="name"
+let Tlist_Show_One_File=1  
+
+" miniBufExplorer
+""let g:miniBufExplorerMoreThanOne=0
 
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
@@ -144,13 +164,13 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd VimResized * :wincmd =
 
 " Fix Cursor in TMUX
-if exists('$TMUX')
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
+""if exists('$TMUX')
+""  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+""  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+""else
+""  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+""  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+""endif
 
 " Go crazy!
 if filereadable(expand("~/.vimrc.local"))
@@ -166,4 +186,7 @@ if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
+set autochdir
+set tags=tags
 
+source ~/cscope.vim

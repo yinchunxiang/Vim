@@ -2,8 +2,7 @@
 cd "$(dirname $0)"
 
 #git clone http://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-#rm -f ~/.vimrc
-mv ~/.vimrc ~/.vimrc_bak
+rm -f ~/.vimrc
 ln -s $(pwd)/vimrc ~/.vimrc 
 
 rm -rf ~/.vim
