@@ -166,4 +166,13 @@ if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
+" ctags
+set autochdir
+set tags=tags;
 
+if filereadable(expand("~/.cscope.vim"))
+    source ~/.cscope.vim
+endif
+
+cmap pt set paste
+cmap np set nopate
