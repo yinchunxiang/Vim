@@ -183,14 +183,11 @@ if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
-<<<<<<< HEAD
 ""nnoremap <ESC> :noh<return> 
  
-=======
 " ctags
 set autochdir
 set tags=tags;
->>>>>>> ab1d1631a8820ce65b47217175197f89217dea11
 
 if filereadable(expand("~/.cscope.vim"))
     source ~/.cscope.vim
