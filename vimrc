@@ -25,9 +25,6 @@ set directory-=.                                             " don't store swapf
 "" vim内部使用的编码方式， 包括Vim的buffer，菜单，消息等
 set encoding=utf-8
 
-"" vim中当前编辑的文件的编码方式
-set fileencoding=utf-8
-
 ""set fileencodings=utf-8,gb18030
 
 "" vim自动探测的顺序表
@@ -186,6 +183,18 @@ if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
+<<<<<<< HEAD
 ""nnoremap <ESC> :noh<return> 
  
+=======
+" ctags
+set autochdir
+set tags=tags;
+>>>>>>> ab1d1631a8820ce65b47217175197f89217dea11
 
+if filereadable(expand("~/.cscope.vim"))
+    source ~/.cscope.vim
+endif
+
+cmap pt set paste
+cmap np set nopate
