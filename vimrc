@@ -186,7 +186,6 @@ if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
-set autochdir
-set tags=tags
+""nnoremap <ESC> :noh<return> 
+ 
 
-source ~/cscope.vim
