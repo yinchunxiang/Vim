@@ -195,3 +195,29 @@ endif
 
 cmap pt set paste
 cmap np set nopate
+
+func BaiduSetComment()
+    call setline(1,"/****************************************************************************")
+    call append(line(".")," * ")
+    call append(2," * Copyright (C) ".strftime("%Y")." Baidu.com, Inc. All rights reserved.")
+    call append(3," * ")
+    call append(4," ****************************************************************************/")
+    call append(5,"")
+    call append(6,"")
+    call append(7,"")
+    call append(8,"/** ")
+    call append(9," * @file ".expand("%"))
+    call append(10," * @author yinchunxiang(com@baidu.com)")
+    call append(11," * @date " .strftime("%Y/%m/%d %H:%M:%S"))
+    call append(12," * @brief ")
+    call append(13," * ")
+    call append(14," **/ ")
+    call append(15," ")
+endfunc
+
+autocmd BufNewFile *.c,*.cpp,*.cc exec ":call BaiduSetComment()"
+autocmd BufNewFile *.h exec ":call BaiduSetComment()"
+
+""自动将光标移动到末尾
+autocmd BufNewFile * normal G
+
