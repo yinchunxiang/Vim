@@ -216,13 +216,27 @@ func BaiduSetComment()
     call append(13," * ")
     call append(14," **/ ")
     call append(15," ")
-    call append(16,"/* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */")
+    call append(16," ")
+    call append(17," ")
+    call append(18," ")
+    call append(19," ")
+    call append(20," ")
+    call append(21," ")
+    call append(22," ")
+    call append(23," ")
+    call append(24," ")
+    call append(25," ")
+    call append(26," ")
+    call append(27," ")
+    call append(28," ")
+    call append(29," ")
+    call append(30,"/* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */")
 endfunc
 
 autocmd BufNewFile *.c,*.cpp,*.cc exec ":call BaiduSetComment()"
 autocmd BufNewFile *.h exec ":call BaiduSetComment()"
 
 ""自动将光标移动到末尾
-autocmd BufNewFile * normal G
+autocmd BufNewFile * normal 17gg
 
-au BufRead *.c,*.cpp,*.cc,*.h,*.hpp,*.py set et nu sw=4 ts=4 tw=100
+""au BufRead *.c,*.cpp,*.cc,*.h,*.hpp,*.py set et nu sw=4 ts=4 tw=100
