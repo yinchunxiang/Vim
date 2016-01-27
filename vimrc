@@ -124,6 +124,9 @@ Bundle 'minibufexpl.vim'
 Bundle 'bufexplorer.zip'
 Bundle 'OmniCppComplete'
 Bundle 'snipMate'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'Valloric/ListToggle'
+Bundle 'scrooloose/syntastic'
 
 " ...
 filetype plugin indent on
@@ -213,6 +216,7 @@ func BaiduSetComment()
     call append(13," * ")
     call append(14," **/ ")
     call append(15," ")
+    call append(16,"/* vim: set expandtab ts=4 sw=4 sts=4 tw=100: */")
 endfunc
 
 autocmd BufNewFile *.c,*.cpp,*.cc exec ":call BaiduSetComment()"
@@ -221,3 +225,4 @@ autocmd BufNewFile *.h exec ":call BaiduSetComment()"
 ""自动将光标移动到末尾
 autocmd BufNewFile * normal G
 
+au BufRead *.c,*.cpp,*.cc,*.h,*.hpp,*.py set et nu sw=4 ts=4 tw=100
