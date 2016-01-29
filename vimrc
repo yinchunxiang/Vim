@@ -240,3 +240,5 @@ autocmd BufNewFile *.h exec ":call BaiduSetComment()"
 autocmd BufNewFile * normal 17gg
 
 ""au BufRead *.c,*.cpp,*.cc,*.h,*.hpp,*.py set et nu sw=4 ts=4 tw=100
+
+set mouse=v
