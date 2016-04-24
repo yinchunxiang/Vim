@@ -47,7 +47,7 @@ snippet pvv
 	void printvv(vector<vector<${1:int}> >& vv) {
 		for (int i = 0; i < vv.size(); ++i) {
 			for(int j = 0; j < vv[i].size(); ++j) {
-				cout << v[i][j] << " ";
+				cout << vv[i][j] << " ";
 			}
 			cout << endl;
 		}
@@ -56,3 +56,22 @@ snippet pvv
 
 snippet md
 	/* vim: set expandtab ts=4 sw=4 sts=4 tw=100 */
+
+snippet leet
+	#include <iostream>
+	#include <vector>
+	using namespace std;
+	class Solution {
+	public:
+	    int ${1:solve}(vector<int>& nums) {
+			/// write your code here
+		    ${2} 
+		}
+	};
+
+	int main(int argc, const char* argv[]) {
+		vector<int> v = {};
+		Solution s;
+		cout << s.solve(v) << endl;
+		return 0;
+	}

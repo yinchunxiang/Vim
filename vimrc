@@ -124,7 +124,7 @@ Bundle 'minibufexpl.vim'
 Bundle 'bufexplorer.zip'
 Bundle 'OmniCppComplete'
 Bundle 'snipMate'
-Bundle 'Valloric/YouCompleteMe'
+""Bundle 'Valloric/YouCompleteMe'
 Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/syntastic'
 
@@ -197,12 +197,12 @@ if filereadable(expand("~/.cscope.vim"))
 endif
 
 cmap pt set paste
-cmap np set nopate
+cmap np set nopaste
 
 func BaiduSetComment()
     call setline(1,"/****************************************************************************")
     call append(line(".")," * ")
-    call append(2," * Copyright (C) ".strftime("%Y")." Baidu.com, Inc. All rights reserved.")
+    call append(2," * Copyright (C) ".strftime("%Y")." @com, Inc. All rights reserved.")
     call append(3," * ")
     call append(4," ****************************************************************************/")
     call append(5,"")
@@ -210,7 +210,7 @@ func BaiduSetComment()
     call append(7,"")
     call append(8,"/** ")
     call append(9," * @file ".expand("%"))
-    call append(10," * @author yinchunxiang(com@baidu.com)")
+    call append(10," * @author yinchunxiang(@com)")
     call append(11," * @date " .strftime("%Y/%m/%d %H:%M:%S"))
     call append(12," * @brief ")
     call append(13," * ")
