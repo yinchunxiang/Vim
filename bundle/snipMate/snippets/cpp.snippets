@@ -54,6 +54,16 @@ snippet pvv
 		cout << endl;
 	}
 
+snippet pl
+	void println(const char& c) {
+		std::cout << "{" << c << "}" << std::endl;
+	}
+
+	template<typename T>
+	void println(const T& t) {
+	    std::cout << "{" << std::to_string(t) << "}" << std::endl;
+	}
+
 snippet md
 	/* vim: set expandtab ts=4 sw=4 sts=4 tw=100 */
 
