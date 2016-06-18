@@ -196,8 +196,7 @@ if filereadable(expand("~/.cscope.vim"))
     source ~/.cscope.vim
 endif
 
-cmap pt set paste
-cmap np set nopaste
+nnoremap <leader>p :set invpaste paste?<CR>
 
 func BaiduSetComment()
     call setline(1,"/****************************************************************************")
@@ -243,5 +242,4 @@ autocmd BufNewFile * normal 17gg
 
 set mouse=v
 
-set path+=/opt/compiler/gcc-4.8.2/include
-set path+=/opt/compiler/gcc-4.8.2/include/c++/4.8.2
+set hlsearch
