@@ -40,6 +40,7 @@ set laststatus=2                                             " always show statu
 "set list                                                     " show trailing whitespace
 "set listchars=tab:▸\ ,trail:▫
 set number                                                   " show line numbers
+set relativenumber
 set shiftwidth=4                                             " normal mode indentation commands use 2 spaces
 set showcmd
 set smartcase                                                " case-sensitive search if any caps
@@ -163,14 +164,6 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-" Fix Cursor in TMUX
-""if exists('$TMUX')
-""  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-""  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-""else
-""  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-""  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-""endif
 
 " Go crazy!
 if filereadable(expand("~/.vimrc.local"))
@@ -243,3 +236,55 @@ autocmd BufNewFile * normal 17gg
 set mouse=v
 
 set hlsearch
+
+function! Incr()
+  let a = line('.') - line("'<")
+  let c = virtcol("'<")
+  if a > 0
+    execute 'normal! '.c.'|'.a."\<C-a>"
+  endif
+  normal `<
+endfunction
+vnoremap <C-a> :call Incr()<CR>
+
+""""""""""""""""""""""""tmux""""""""""""""""""""""""""
+
+" for tmux to automatically set paste and nopaste mode at the time pasting (as
+" happens in VIM UI)
+ 
+function! WrapForTmux(s)
+  if !exists('$TMUX')
+    return a:s
+  endif
+ 
+  let tmux_start = "\<Esc>Ptmux;"
+  let tmux_end = "\<Esc>\\"
+ 
+  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
+endfunction
+ 
+let &t_SI .= WrapForTmux("\<Esc>[?2004h")
+let &t_EI .= WrapForTmux("\<Esc>[?2004l")
+ 
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+ 
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+
+" Fix Cursor in TMUX
+if exists('$TMUX')
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+else
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+endif
+
+if exists('$TMUX')
+  set term=screen-256color
+endif
+
