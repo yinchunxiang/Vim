@@ -13,7 +13,7 @@ set whichwrap=b,s,<,>,[,]
 
 " enable syntax highlighting
 syntax enable
-
+set guifont=Menlo:h14
 set autoindent
 set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
 set backspace=2                                              " Fix broken backspace in some setups
@@ -64,8 +64,8 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-map <leader>l :Align
-"nmap <leader>a :Ack 
+"map <leader>l :Align
+""nmap <leader>a :Ack 
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
@@ -75,7 +75,7 @@ nmap <leader>] :TagbarToggle<CR>
 nmap <leader><space> :call whitespace#strip_trailing()<CR>
 nmap <leader>g :GitGutterToggle<CR>
 nmap <leader>c <Plug>Kwbd
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+map <silent> <leader>R :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
@@ -99,48 +99,49 @@ call vundle#rc()
  
 " let Vundle manage Vundle
 " required! 
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
  
-" My Bundles here:
+" My Plugins here:
 "
 " original repos on github
-Bundle 'tpope/vim-fugitive'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'tpope/vim-rails.git'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plugin 'tpope/vim-rails.git'
 " vim-scripts repos
-Bundle 'L9'
-Bundle 'FuzzyFinder'
-Bundle 'AutoClose'
+Plugin 'L9'
+Plugin 'FuzzyFinder'
+Plugin 'AutoClose'
 " non github repos
-Bundle 'git://git.wincent.com/command-t.git'
-Bundle 'https://github.com/Lokaltog/vim-powerline.git'
-Bundle 'https://github.com/kien/ctrlp.vim.git'
-Bundle 'https://github.com/vim-scripts/a.vim.git'
-Bundle 'git://github.com/tpope/vim-surround.git'
+Plugin 'git://git.wincent.com/command-t.git'
+Plugin 'https://github.com/Lokaltog/vim-powerline.git'
+Plugin 'https://github.com/kien/ctrlp.vim.git'
+Plugin 'https://github.com/vim-scripts/a.vim.git'
+Plugin 'git://github.com/tpope/vim-surround.git'
 
-Bundle 'The-NERD-tree'
-Bundle 'taglist.vim'
-Bundle 'minibufexpl.vim'
-Bundle 'bufexplorer.zip'
-Bundle 'OmniCppComplete'
-Bundle 'snipMate'
-""Bundle 'Valloric/YouCompleteMe'
-Bundle 'Valloric/ListToggle'
-Bundle 'scrooloose/syntastic'
+Plugin 'The-NERD-tree'
+Plugin 'taglist.vim'
+Plugin 'minibufexpl.vim'
+Plugin 'bufexplorer.zip'
+Plugin 'OmniCppComplete'
+Plugin 'snipMate'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/ListToggle'
+Plugin 'scrooloose/syntastic'
+Plugin 'fatih/vim-go'
 
 " ...
 filetype plugin indent on
  
 "
 " Brief help  -- 此处后面都是vundle的使用命令
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+" :PluginList          - list configured bundles
+" :PluginInstall(!)    - install(update) bundles
+" :PluginSearch(!) foo - search(or refresh cache first) for foo
+" :PluginClean(!)      - confirm(or auto-approve) removal of unused bundles
 "
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+" NOTE: comments after Plugin command are not allowed..
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " vim-powerline plugin
