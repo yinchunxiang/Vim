@@ -122,7 +122,7 @@ class Response_Detection_test( object ):
         request = CommandRequest( [ command ] )
         request._response = response
         request.RunPostCommandActionsIfNeeded()
-        vim_command.assert_called_with( "echom '{0}'".format( response ) )
+        vim_command.assert_called_with( "echo '{0}'".format( response ) )
 
     tests = [
       [ 'AnythingYouLike',        True ],
@@ -140,14 +140,15 @@ class Response_Detection_test( object ):
     # are no fixits available
     def EmptyFixItTest( command ):
       with patch( 'ycm.vimsupport.ReplaceChunks' ) as replace_chunks:
-        with patch( 'ycm.vimsupport.EchoText' ) as echo_text:
+        with patch( 'ycm.vimsupport.PostVimMessage' ) as post_vim_message:
           request = CommandRequest( [ command ] )
           request._response = {
             'fixits': []
           }
           request.RunPostCommandActionsIfNeeded()
 
-          echo_text.assert_called_with( 'No fixits found for current line' )
+          post_vim_message.assert_called_with(
+            'No fixits found for current line', warning = False )
           replace_chunks.assert_not_called()
 
     for test in [ 'FixIt', 'Refactor', 'GoToHell', 'any_old_garbade!!!21' ]:
@@ -156,15 +157,17 @@ class Response_Detection_test( object ):
 
   def FixIt_Response_test( self ):
     # Ensures we recognise and handle fixit responses with some dummy chunk data
-    def FixItTest( command, response, chunks ):
+    def FixItTest( command, response, chunks, selection ):
       with patch( 'ycm.vimsupport.ReplaceChunks' ) as replace_chunks:
-        with patch( 'ycm.vimsupport.EchoText' ) as echo_text:
-          request = CommandRequest( [ command ] )
-          request._response = response
-          request.RunPostCommandActionsIfNeeded()
+        with patch( 'ycm.vimsupport.PostVimMessage' ) as post_vim_message:
+          with patch( 'ycm.vimsupport.SelectFromList',
+                      return_value = selection ):
+            request = CommandRequest( [ command ] )
+            request._response = response
+            request.RunPostCommandActionsIfNeeded()
 
-          replace_chunks.assert_called_with( chunks )
-          echo_text.assert_not_called()
+            replace_chunks.assert_called_with( chunks )
+            post_vim_message.assert_not_called()
 
     basic_fixit = {
       'fixits': [ {
@@ -177,25 +180,31 @@ class Response_Detection_test( object ):
 
     multi_fixit = {
       'fixits': [ {
+        'text': 'first',
         'chunks': [ {
           'dummy chunk contents': True
         } ]
       }, {
-        'additional fixits are ignored currently': True
+        'text': 'second',
+        'chunks': [ {
+          'dummy chunk contents': False
+        }]
       } ]
     }
     multi_fixit_first_chunks = multi_fixit[ 'fixits' ][ 0 ][ 'chunks' ]
+    multi_fixit_second_chunks = multi_fixit[ 'fixits' ][ 1 ][ 'chunks' ]
 
     tests = [
-      [ 'AnythingYouLike',        basic_fixit, basic_fixit_chunks ],
-      [ 'GoToEvenWorks',          basic_fixit, basic_fixit_chunks ],
-      [ 'FixItWorks',             basic_fixit, basic_fixit_chunks ],
-      [ 'and8434fd andy garbag!', basic_fixit, basic_fixit_chunks ],
-      [ 'additional fixits ignored', multi_fixit, multi_fixit_first_chunks ],
+      [ 'AnythingYouLike',        basic_fixit, basic_fixit_chunks, 0 ],
+      [ 'GoToEvenWorks',          basic_fixit, basic_fixit_chunks, 0 ],
+      [ 'FixItWorks',             basic_fixit, basic_fixit_chunks, 0 ],
+      [ 'and8434fd andy garbag!', basic_fixit, basic_fixit_chunks, 0 ],
+      [ 'select from multiple 1',   multi_fixit, multi_fixit_first_chunks, 0 ],
+      [ 'select from multiple 2',   multi_fixit, multi_fixit_second_chunks, 1 ],
     ]
 
     for test in tests:
-      yield FixItTest, test[ 0 ], test[ 1 ], test[ 2 ]
+      yield FixItTest, test[ 0 ], test[ 1 ], test[ 2 ], test[ 3 ]
 
 
   def Message_Response_test( self ):
@@ -203,11 +212,11 @@ class Response_Detection_test( object ):
     # to the user
 
     def MessageTest( command, message ):
-      with patch( 'ycm.vimsupport.EchoText' ) as echo_text:
+      with patch( 'ycm.vimsupport.PostVimMessage' ) as post_vim_message:
         request = CommandRequest( [ command ] )
         request._response = { 'message': message }
         request.RunPostCommandActionsIfNeeded()
-        echo_text.assert_called_with( message )
+        post_vim_message.assert_called_with( message, warning = False )
 
     tests = [
       [ '___________', 'This is a message' ],
