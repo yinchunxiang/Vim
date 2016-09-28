@@ -1,9 +1,10 @@
 " don't bother with vi compatibility
 set nocompatible
 
-filetype on " without this vim emits a zero exit status, later, because of :ft off
-filetype plugin indent on
+""filetype on " without this vim emits a zero exit status, later, because of :ft off
+filetype off " without this vim emits a zero exit status, later, because of :ft off
 set modeline
+set showcmd
 
 "匹配括号的规则，增加针对html的<>
 set matchpairs=(:),{:},[:],<:>
@@ -95,7 +96,7 @@ endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call vundle#begin()
  
 " let Vundle manage Vundle
 " required! 
@@ -104,18 +105,21 @@ Plugin 'gmarik/vundle'
 " My Plugins here:
 "
 " original repos on github
-Plugin 'tpope/vim-fugitive'
+""Plugin 'tpope/vim-fugitive'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'tpope/vim-rails.git'
+"Plugin 'townk/vim-autoclose'
+Plugin 'jiangmiao/auto-pairs'
+
 " vim-scripts repos
 Plugin 'L9'
 Plugin 'FuzzyFinder'
-Plugin 'AutoClose'
+"Plugin 'AutoClose'
 " non github repos
 Plugin 'git://git.wincent.com/command-t.git'
 Plugin 'https://github.com/Lokaltog/vim-powerline.git'
-Plugin 'https://github.com/kien/ctrlp.vim.git'
+"Plugin 'https://github.com/kien/ctrlp.vim.git'
 Plugin 'https://github.com/vim-scripts/a.vim.git'
 Plugin 'git://github.com/tpope/vim-surround.git'
 
@@ -129,9 +133,12 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/ListToggle'
 Plugin 'scrooloose/syntastic'
 Plugin 'fatih/vim-go'
+"Plugin 'rdnetto/YCM-Generator'
+"Plugin 'Shougo/neocomplete.vim'
 
-" ...
-filetype plugin indent on
+" All of your Plugins must be added before the following line
+call vundle#end()			"required
+filetype plugin indent on		"required
  
 "
 " Brief help  -- 此处后面都是vundle的使用命令
@@ -144,7 +151,7 @@ filetype plugin indent on
 " NOTE: comments after Plugin command are not allowed..
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" vim-powerline plugin
+""""""""""""""""""""" vim-powerline plugin
 set laststatus=2
 set t_Co=256
 let g:Powerline_symbol = 'unicode'
@@ -155,7 +162,7 @@ let Tlist_WinWidth=40
 let Tlist_Sort_Type="name"
 let Tlist_Show_One_File=1  
 
-" miniBufExplorer
+""""""""""""""""""""" miniBufExplorer
 ""let g:miniBufExplorerMoreThanOne=0
 
 " fdoc is yaml
@@ -250,42 +257,53 @@ vnoremap <C-a> :call Incr()<CR>
 
 """"""""""""""""""""""""tmux""""""""""""""""""""""""""
 
-" for tmux to automatically set paste and nopaste mode at the time pasting (as
-" happens in VIM UI)
- 
-function! WrapForTmux(s)
-  if !exists('$TMUX')
-    return a:s
-  endif
- 
-  let tmux_start = "\<Esc>Ptmux;"
-  let tmux_end = "\<Esc>\\"
- 
-  return tmux_start . substitute(a:s, "\<Esc>", "\<Esc>\<Esc>", 'g') . tmux_end
-endfunction
- 
-let &t_SI .= WrapForTmux("\<Esc>[?2004h")
-let &t_EI .= WrapForTmux("\<Esc>[?2004l")
- 
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
- 
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+""""""""""" vim-go custom mappings
+au FileType go nmap <Leader>gm <Plug>(go-implements)
+au FileType go nmap <Leader>gi <Plug>(go-info)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <Leader>gdv <Plug>(go-doc-vertical)
+au FileType go nmap <leader>gr <Plug>(go-run)
+au FileType go nmap <leader>gb <Plug>(go-build)
+au FileType go nmap <leader>gt <Plug>(go-test)
+au FileType go nmap <leader>gc <Plug>(go-coverage)
+au FileType go nmap <Leader>gds <Plug>(go-def-split)
+au FileType go nmap <Leader>gdv <Plug>(go-def-vertical)
+au FileType go nmap <Leader>gdt <Plug>(go-def-tab)
+au FileType go nmap <Leader>gre <Plug>(go-rename)"
+
+let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
+""""""""""""""" neocomplete
+let g:neocomplete#enable_at_startup = 1
 
 
-" Fix Cursor in TMUX
-if exists('$TMUX')
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-else
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
-endif
+""""""""""" for syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
-if exists('$TMUX')
-  set term=screen-256color
-endif
+let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
+
+""""""""""" YouCompleteMe
+let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_min_num_of_chars_for_completion = 1
+let g:ycm_auto_trigger = 1
+set completeopt-=preview
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.'],
+  \   'go' : ['.'],
+  \   'objc' : ['->', '.'],
+  \   'cpp,objcpp' : ['->', '.', '::'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,d,vim,ruby,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
+  \ }
