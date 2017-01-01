@@ -128,11 +128,14 @@ Plugin 'taglist.vim'
 Plugin 'minibufexpl.vim'
 Plugin 'bufexplorer.zip'
 Plugin 'OmniCppComplete'
-Plugin 'snipMate'
+" Plugin 'snipMate'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'Valloric/ListToggle'
 Plugin 'scrooloose/syntastic'
 Plugin 'fatih/vim-go'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+Plugin 'ervandew/supertab'
 "Plugin 'rdnetto/YCM-Generator'
 "Plugin 'Shougo/neocomplete.vim'
 
@@ -307,3 +310,8 @@ let g:ycm_semantic_triggers =  {
   \   'lua' : ['.', ':'],
   \   'erlang' : [':'],
   \ }
+
+
+let g:ycm_key_list_select_completion = ['\<C-TAB>', '\<Down>']
+let g:ycm_key_list_previous_completion = ['\<C-S-TAB>', '\<Up>']
+let g:SuperTabDefaultCompletionType = '\<C-Tab>'
