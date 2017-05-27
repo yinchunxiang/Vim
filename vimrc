@@ -14,7 +14,7 @@ set whichwrap=b,s,<,>,[,]
 
 " enable syntax highlighting
 syntax enable
-set guifont=Menlo:h14
+set guifont=Menlo:h15
 set autoindent
 set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
 set backspace=2                                              " Fix broken backspace in some setups

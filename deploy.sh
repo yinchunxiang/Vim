@@ -9,4 +9,9 @@ ln -s $(pwd)/vimrc ~/.vimrc
 rm -rf ~/.vim
 ln -s $(pwd)/ ~/.vim
 
+rm -f ~/.gitconfig
+ln -s $(pwd)/gitconfig ~/.gitconfig
+
 vim +BundleInstall +qa
+
+
